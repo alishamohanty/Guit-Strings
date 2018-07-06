@@ -2,20 +2,16 @@ const express = require('express')
 const cors = require('cors')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
-
+const {sequelize} = require('./models')
+const config = require('./config/config')
+const routes = require('./routes')
 const app = express()
 app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
-
-app.post('/register', (req, res) => {
-  res.send({
-    message: ` ${req.body.email} is your email address buddy!!`
+routes(app)
+sequelize.sync()
+  .then(() => {
+    app.listen(config.port)
+    console.log(` Server started on port ${config.port} `)
   })
-})
-app.listen(8081, (err) => {
-  if (err) {
-    console.log(err)
-  }
-  console.log('Server listening to port 8081')
-})
