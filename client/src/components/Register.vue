@@ -16,7 +16,8 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      error: null
     }
   },
   methods: {
@@ -27,8 +28,8 @@ export default {
           password: this.password
         })
         console.log(response.data)
-      } catch (err) {
-        console.log(err)
+      } catch (error) {
+        this.error = error.response.data.error
       }
     }
   }
