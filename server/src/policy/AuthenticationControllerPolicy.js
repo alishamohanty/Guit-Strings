@@ -1,6 +1,7 @@
 const joi = require('joi')
 module.exports = {
     register(req, res, next) {
+      console.log('Inside AuthPlicy register method')
       const schema = {
         email: joi.string().email(),
         password: joi.string().regex(
@@ -8,14 +9,17 @@ module.exports = {
         )
       }
       const {error, value} = joi.validate(req.body ,schema)
+      console.log('After validating by joi')
       if (error) {
         switch(error.details[0].context.key){
           case 'email':
+            console.log('Inside authpolicy email error')
             res.status(400).send({
                 error:'You must provide an valid email'
             })
             break;
           case'password':
+            console.log('Inside authpolicy password error')
             res.status(400).send({
               error: `The password provided failed to match the following rules:
               <br>
@@ -31,6 +35,7 @@ module.exports = {
         }
           
       } else {
+          console.log('Inside authpolicy default else')
           next()
       } 
     }
