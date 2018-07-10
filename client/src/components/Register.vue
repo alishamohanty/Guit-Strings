@@ -3,7 +3,7 @@
   <v-layout column>
     <v-flex xs12 sm8 md4>
       <div class="white elevation-2">
-        <v-toolbar flat dense dark class="tool">
+        <v-toolbar flat dense dark class="cyan darken-2">
           <v-toolbar-title>
             Register
           </v-toolbar-title>
@@ -64,9 +64,5 @@ export default {
   color: white;
   background-color: #0097A7;
 }
-.tool
-{
-  color:white;
-  background-color: #00ACC1;
-}
+
 </style>
