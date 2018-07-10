@@ -1,13 +1,23 @@
 const {User} = require('../models')
+const jwt = require('jsonwebtoken')
+const config = require('../config/config')
+
+function jwtSignUser (user) {
+  const ONE_WEEK = 60 * 60 * 24 * 7;
+  return  jwt.sign(user, config.authentication.jwtSecret, {
+    expiresIn: ONE_WEEK
+  })
+}
 
 module.exports = {
   async register (req, res) {
     try {
       const user = await User.create(req.body)
+      console.log('After creating the entry in database');      
       res.send(user.toJSON())
     } catch (err) {
       res.status(400).send({
-          error:'This email account already exsists!!'
+          error:'Error Occured while creating an account!!'
       })
     }   
   },
@@ -24,14 +34,16 @@ module.exports = {
       return res.status(403).send({
         error: 'The User is not registered!!'})
     } 
-    const isPassword = password === user.password
+    const isPassword =  await user.comparePassword(password)
+    console.log(isPassword)
     if (!isPassword) {
       return res.status(403).send({
       error: 'The Password entered is invalid'})
     }
     const userJson = user.toJSON()
     res.send({
-      user: userJson
+      user: userJson,
+      token: jwtSignUser(userJson)
     })    
     } catch (error) {
       res.status(400).send({
