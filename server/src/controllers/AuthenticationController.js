@@ -30,12 +30,14 @@ module.exports = {
         email: email
       }
     })
+    console.log('After find method!')
+    console.log('user ',user)
     if(!user) {
       return res.status(403).send({
         error: 'The User is not registered!!'})
-    } 
+    }
     const isPassword =  await user.comparePassword(password)
-    console.log(isPassword)
+    console.log('Checking for isPassword ', password, isPassword)
     if (!isPassword) {
       return res.status(403).send({
       error: 'The Password entered is invalid'})
