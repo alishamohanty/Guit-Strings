@@ -15,10 +15,10 @@
         <v-btn flat>
             Browse
         </v-btn>
-        <v-btn flat @click="navigateTo({ name: 'login'})">
+        <v-btn v-if=" !$store.state.isUserLoggedIn " flat @click="navigateTo({ name: 'login'})">
           Login
         </v-btn>
-        <v-btn flat @click="navigateTo({ name: 'register'})">
+        <v-btn v-if=" !$store.state.isUserLoggedIn " flat @click="navigateTo({ name: 'register'})">
           Sign Up
         </v-btn>
       </v-toolbar-items>

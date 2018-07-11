@@ -42,6 +42,8 @@ export default {
           email: this.email,
           password: this.password
         })
+        this.$store.dispatch('setToken', response.data.token)
+        this.$store.dispatch('setUser', response.data.token)
         console.log(response.data)
         this.error = ''
         this.message = 'Successfully Login into your Account'
