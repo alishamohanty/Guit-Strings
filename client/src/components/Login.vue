@@ -14,6 +14,7 @@
          <v-text-field prepend-icon="lock" type="password" name="password"  v-model="password" label="Password" ></v-text-field>
           <br>
           <div class="error" v-html="error"/>
+          <div class="message" v-html="message"/>
           <br>
           <v-btn class="cyan darken-2" @click="login" dark> Login </v-btn>
         </div>
@@ -29,7 +30,8 @@ export default {
     return {
       email: '',
       password: '',
-      error: null
+      error: null,
+      message: ''
     }
   },
   methods: {
@@ -41,6 +43,8 @@ export default {
           password: this.password
         })
         console.log(response.data)
+        this.error = ''
+        this.message = 'Successfully Login into your Account'
       } catch (error) {
         this.error = error.response.data.error
         console.log(this.error)
@@ -56,5 +60,9 @@ export default {
 .container{
   justify-content: center;
   display: flex;
+}
+.message {
+  color: #00ACC1;
+  font-weight: bold;
 }
 </style>
