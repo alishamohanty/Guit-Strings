@@ -1,6 +1,6 @@
 <template>
  <panel title="Songs">
-     <h3>YO YO YO</h3>
+     <div slot="heading"></div>
  </panel>
 </template>
 

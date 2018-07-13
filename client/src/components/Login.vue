@@ -2,12 +2,7 @@
  <div class="container">
   <v-layout column>
     <v-flex xs12 sm8 md4>
-      <div class="white elevation-2">
-        <v-toolbar flat dense dark class="cyan darken-1">
-          <v-toolbar-title>
-            Login
-          </v-toolbar-title>
-        </v-toolbar>
+      <panel title="Login">
         <div class="ml-5 pl-4 pr-4 pt-2 pb-2 mr-5 mt-5">
           <v-text-field prepend-icon="person" type="email" name="email"  v-model="email" label="Email"></v-text-field>
           <br>
@@ -18,13 +13,14 @@
           <br>
           <v-btn class="cyan darken-2" @click="login" dark> Login </v-btn>
         </div>
-      </div>
+      </panel>
     </v-flex>
   </v-layout>
 </div>
 </template>
 <script>
 import AuthenticationService from '@/services/AuthenticationService'
+import panel from '@/components/Panel'
 export default {
   data () {
     return {
@@ -52,6 +48,9 @@ export default {
         console.log(this.error)
       }
     }
+  },
+  components: {
+    panel
   }
 }
 </script>
