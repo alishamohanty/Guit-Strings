@@ -13,7 +13,7 @@
     <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-btn flat @click="navigateTo({name:'songs'})">
-            Browse
+          Browse
         </v-btn>
         <v-btn v-if=" !$store.state.isUserLoggedIn " flat @click="navigateTo({ name: 'login'})">
           Login

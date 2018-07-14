@@ -3,7 +3,7 @@ module.exports = {
   async index (req, res) {
     try {
         const songs = await Song.findAll({
-          limit: 10
+          limit: 20
         })
         res.send(songs)
     } catch (error) {
