@@ -81,6 +81,8 @@ export default {
   width: 270px;
 }
 .song {
-  font-size: 2rem;
+  font-size: 2.3rem;
+  font-family: 'Gaegu', cursive;
+
 }
 </style>

@@ -23,5 +23,15 @@ module.exports = {
       error:'Some issue creating Songs'
         })
     }
+  },
+  async show (req, res) {
+    try {
+      const song = await Song.findById(req.params.songId)
+      console.log('This is song', song)
+      res.send(song)
+    } catch (error) {
+      console.log('This is an error')
+      res.status(500).send(error)
+    }
   }
 }
