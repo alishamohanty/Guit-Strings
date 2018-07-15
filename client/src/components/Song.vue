@@ -11,8 +11,11 @@
                    <span class="song-artist pr-4">- By {{song.artist}}</span>
                 </v-toolbar>
         <v-layout>
-            <v-flex xs8 class="pt-1 top-panel">
-                <youtube :video-id = "song.youtubeId"></youtube>
+            <v-flex xs8 class="pt-5 top-panel">
+                <youtube
+                :video-id="song.youtubeId"
+                :player-width="600"
+                :player-height="280"></youtube>
             </v-flex>
             <v-flex >
                 <img class="image-url pt-2" :src="song.albumImageURL">
@@ -56,29 +59,13 @@
                     ></v-textarea>
             </div>
             </v-flex>
-                        <v-flex xs12 class="ml-2">
-                <div class="white elevation-2">
-                    <v-toolbar flat dense dark class="cyan darken-1">
-                    <v-toolbar-title>
-                        You Tube
-                    </v-toolbar-title>
-                    </v-toolbar>
-                    <v-textarea
-                    text-lg-center
-                      class="pl-5"
-                      height="300px"
-                            readonly
-                            v-model="song.lyrics"
-                    ></v-textarea>
-            </div>
-            </v-flex>
         </v-layout>
     </v-container>
 </template>
 
 <script>
 import SongsService from '@/services/SongsService'
-import VueYouTubeEmbed from 'vue-youtube-embed'
+import YouTube from 'vue-youtube-embed'
 export default {
   data () {
     return {
@@ -90,6 +77,9 @@ export default {
     console.log(songId)
     this.song = (await SongsService.show(songId)).data
     console.log(this.song)
+  },
+  components: {
+    YouTube
   }
 }
 </script>
