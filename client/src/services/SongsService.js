@@ -10,5 +10,8 @@ export default {
   post (song) {
     console.log('Inside songs service')
     return Api().post('songs', song)
+  },
+  put (song) {
+    return Api().put(`song/${song.id}`, song)
   }
 }

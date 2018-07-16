@@ -33,5 +33,19 @@ module.exports = {
       console.log('This is an error')
       res.status(500).send(error)
     }
+  },
+  async update (req, res){
+    try {
+      const song = await Song.update(req.body, {
+        where: {
+          id: req.params.songId
+        }
+      })
+      console.log('Song Updated', song)
+      res.send(song)
+    } catch (error) {
+      console.log('This is an error while updating the song')
+      res.status(500).send(error)
+    }
   }
 }

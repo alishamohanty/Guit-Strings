@@ -8,7 +8,20 @@
                     {{song.title}}
                   </v-toolbar-title>
                  <v-spacer></v-spacer>
-                   <span class="song-artist pr-4">- By {{song.artist}}</span>
+                   <span class="song-artist">- By {{song.artist}}</span>
+                      <v-btn
+                        fab
+                        dark
+                        color="cyan darken-3"
+                        medium
+                        right
+                        absolute
+                        middle
+                        @click="navigateTo({ name:'song-edit', params: {
+                  songId: songId
+                 }})">
+                    <v-icon>edit</v-icon>
+                    </v-btn>
                 </v-toolbar>
         <v-layout>
             <v-flex xs8 class="pt-5 top-panel">
@@ -69,7 +82,8 @@ import YouTube from 'vue-youtube-embed'
 export default {
   data () {
     return {
-      song: null
+      song: null,
+      songId: this.$store.state.route.params.songId
     }
   },
   async mounted () {
@@ -80,6 +94,11 @@ export default {
   },
   components: {
     YouTube
+  },
+  methods: {
+    navigateTo (route) {
+      this.$router.push(route)
+    }
   }
 }
 </script>
@@ -95,6 +114,7 @@ export default {
   }
   .song-artist {
     font-size: 1.5rem;
+    padding-right:54px;
   }
   .song-genre-album {
     font-size: 1.8rem;
@@ -105,5 +125,8 @@ export default {
   .image-url {
   height: 300px;
   width: 270px;
+}
+.v-btn--floating .v-icon {
+    height: 50%;
 }
 </style>
