@@ -6,9 +6,6 @@
         <span class ="logo" @click="navigateTo({ name: 'root'})" flat>TabTrack</span>
     </v-toolbar-title>
     <v-toolbar-items class="pl-3">
-        <v-btn flat class="refresh">
-          <v-icon>refresh</v-icon>
-        </v-btn>
     </v-toolbar-items>
     <v-spacer></v-spacer>
       <v-toolbar-items>
@@ -39,6 +36,25 @@ export default {
       this.$router.push({
         name: 'root'
       })
+    }
+  },
+  watch: {
+    search (value) {
+      const route = {
+        name: 'songs'
+      }
+      if (this.search !== '') {
+        route.query = {
+          search: this.search
+        }
+      }
+      this.$router.push(route)
+    },
+    '$route.query.search': {
+      immediate: true,
+      handler (value) {
+        this.search = value
+      }
     }
   }
 }

@@ -1,13 +1,9 @@
 <template>
   <div class="white elevation-2">
-        <v-toolbar flat dense dark class="cyan lighten-1">
-          <v-text-field
-            right
-            prepend-icon="search"
-            class= "sea"
-            placeholder="Search by Song Title, artist, album, or genre"
-            v-model= "search"
-          ></v-text-field>
+        <v-toolbar flat dense dark class="cyan darken-1">
+          <v-toolbar-title>
+            Songs
+          </v-toolbar-title>
           <v-btn
             fab
             dark
@@ -17,7 +13,7 @@
             absolute
             middle
             @click="navigateTo({ name: 'songs-create'})">
-        <v-icon>add</v-icon>
+        <v-icon class="mt-5">add</v-icon>
       </v-btn>
         </v-toolbar>
         <div class="pl-4 pr-4 pt-2 pb-2">
@@ -57,8 +53,7 @@ export default {
   name: 'Songs',
   data () {
     return {
-      songs: null,
-      search: ''
+      songs: null
     }
   },
   components: {
@@ -70,25 +65,10 @@ export default {
     }
   },
   watch: {
-    search (value) {
-      const route = {
-        name: 'songs'
-      }
-      if (this.search !== '') {
-        route.query = {
-          search: this.search
-        }
-      }
-      this.$router.push(route)
-    },
     '$route.query.search': {
       immediate: true,
       async handler (value) {
-        this.search = value
-        console.log(value)
-        const find = (await SongsService.index(value)).data
-        console.log(find)
-        this.songs = find
+        this.songs = await SongsService.search(value)
       }
     }
   }
@@ -108,10 +88,5 @@ export default {
   font-size: 2.3rem;
   font-family: 'Gaegu', cursive;
 
-}
-.sea {
-  padding-left: 30px;
-  padding-top: 22px;
-  width: 40px;
 }
 </style>

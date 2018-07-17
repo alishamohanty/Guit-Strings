@@ -82,7 +82,7 @@ import YouTube from 'vue-youtube-embed'
 export default {
   data () {
     return {
-      song: null,
+      song: '',
       songId: this.$store.state.route.params.songId
     }
   },
