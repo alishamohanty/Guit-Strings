@@ -43,6 +43,7 @@ export default {
         console.log(response.data)
         this.error = ''
         this.message = 'Successfully Login into your Account'
+        this.$router.push({name: 'songs'})
       } catch (error) {
         this.error = error.response.data.error
         console.log(this.error)

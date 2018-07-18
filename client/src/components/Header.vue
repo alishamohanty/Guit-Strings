@@ -3,7 +3,7 @@
     <v-toolbar-side-icon></v-toolbar-side-icon>
 
     <v-toolbar-title class="white--text">
-        <span class ="logo" @click="navigateTo({ name: 'root'})" flat>TabTrack</span>
+        <span class ="logo" @click="navigateTo({ name: 'songs'})" flat>TabTrack</span>
     </v-toolbar-title>
     <v-toolbar-items class="pl-3">
     </v-toolbar-items>
@@ -34,7 +34,7 @@ export default {
       this.$store.dispatch('setToken', null)
       this.$store.dispatch('setUser', null)
       this.$router.push({
-        name: 'root'
+        name: 'songs'
       })
     }
   },
