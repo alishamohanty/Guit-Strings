@@ -20,12 +20,29 @@ module.exports = {
     }
   },
   async post (req, res) {
-    try {
-      const bookmark = req.body
+    try {      
+      console.log('Inside post method')
+      const {SongId,UserId} = req.body
+      console.log(req.body,UserId,SongId)
+      const bookmark = await Bookmark.findOne({
+        where: {
+            SongId: SongId,
+            UserId: UserId
+        }
+      })
+      console.log('bookmark is', !!(bookmark), bookmark)
+      if (bookmark) {
+        return res.status(400).send({
+          error: 'You already have this set as a bookmark'
+        })
+      }
       console.log('req.body is', bookmark)
-      const created = await Bookmark.create(req.body)
+      const newBookmark = await Bookmark.create({
+        SongId: SongId,
+        UserId: UserId        
+      })
       console.log('bookmark created', created)
-      res.send(bookmark)
+      res.send(newBookmark)
     } catch (error) {
       console.log('An error occured while creating the Bookmark',error)
     }
@@ -39,6 +56,16 @@ module.exports = {
       res.send(bookmark)
     } catch (error) {
       console.log('An error occured while deleting the Bookmark',error)
+    }
+  },
+  async findAll (req, res) {
+    try {
+      const allbookmarks = await Bookmark.findAll()
+      res.send(allbookmarks)
+    } catch (error) {
+      res.status(500).send({
+        error: 'Error while sending fetching all bookmarks'
+      })
     }
   }
 }

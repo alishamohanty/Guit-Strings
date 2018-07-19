@@ -13,5 +13,7 @@ module.exports = (app) => {
   app.put('/song/:songId', SongsController.update)
   app.get('/bookmarks', BookmarksController.index)
   app.post('/bookmarks', BookmarksController.post)
-  // app.get('/bookmarks/:bookmarkId', BookmarksController.delete) 
+  app.get('/bookmarks/:bookmarkId', BookmarksController.delete)
+  app.get('/books', BookmarksController.findAll)
+  
 }

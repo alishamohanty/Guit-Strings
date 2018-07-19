@@ -24,7 +24,7 @@
                     <v-icon>edit</v-icon>
                     </v-btn>
                       <v-btn
-                        v-if="isUserLoggedIn && !isBookmarked"
+                        v-if="isUserLoggedIn && !bookmark"
                         fab
                         right
                         dark
@@ -34,11 +34,11 @@
                         middle
                         class="book"
                         title="Bookmark"
-                        @click="bookmark()">
+                        @click="setAsBookmark">
                     <v-icon>bookmark</v-icon>
                     </v-btn>
                       <v-btn
-                        v-if="isUserLoggedIn && isBookmarked"
+                        v-if="isUserLoggedIn && bookmark"
                         fab
                         right
                         dark
@@ -48,7 +48,7 @@
                         middle
                         class="unbook"
                         title="Unbookmark"
-                        @click="unbookmark">
+                        @click="setAsUnbookmark">
                     <v-icon>bookmark_border</v-icon>
                   </v-btn>
                 </v-toolbar>
@@ -115,7 +115,7 @@ export default {
     return {
       song: '',
       songId: this.$store.state.route.params.songId,
-      isBookmarked: false
+      bookmark: null
     }
   },
   computed: {
@@ -123,17 +123,23 @@ export default {
       'isUserLoggedIn'
     ])
   },
+  watch: {
+   async song () {
+     if (!this.isUserLoggedIn) {
+      return
+    }
+    this.bookmark = (await BookmarksService.index({
+      songid: this.songId,
+      userid: this.$store.state.user.id
+    })).data
+    console.log('bookmarked?', !!(this.bookmark))
+   }
+  },
   async mounted () {
     const songId = this.$store.state.route.params.songId
     console.log(songId)
     this.song = (await SongsService.show(songId)).data
     console.log(this.song)
-    const bookmark = (await BookmarksService.index({
-      songid: this.songId,
-      userid: this.$store.state.user.id
-    })).data
-    this.isBookmarked = !!bookmark
-    console.log('bookmarked?', this.isBookmarked)
   },
   components: {
     YouTube
@@ -142,27 +148,22 @@ export default {
     navigateTo (route) {
       this.$router.push(route)
     },
-    async bookmark () {
-      if (!this.isUserLoggedIn) {
-        return
-      }
+    async setAsBookmark () {
       try {
-        await BookmarksService.post({
+        this.bookmark = (await BookmarksService.post({
           SongId: this.songId,
           UserId: this.$store.state.user.id
-        })
-        console.log('Bookmarked')
+        })).data
+        console.log('Bookmarked', !!(this.bookmark))
       } catch (error) {
         console.log(error)
       }
     },
-    async unbookmark () {
+    async setAsUnbookmark () {
       try {
-        console.log('Inside Unbookmark method')
-        await BookmarksService.delete({
-          songId: this.songId,
-          userId: this.$store.state.user.id
-        })
+        console.log('Inside Unbookmark method with bookmarkId as', this.bookmark.id)
+        await BookmarksService.delete(this.bookmark.id)
+        this.bookmark = null
         console.log('Unbookmarked')
       } catch (error) {
         console.log(error)
@@ -200,6 +201,6 @@ export default {
   margin-right: 65px;
 }
 .unbook {
-  margin-right: 65px
+  margin-right: 105px
 }
 </style>
