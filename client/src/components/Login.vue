@@ -39,7 +39,7 @@ export default {
           password: this.password
         })
         this.$store.dispatch('setToken', response.data.token)
-        this.$store.dispatch('setUser', response.data.token)
+        this.$store.dispatch('setUser', response.data.user)
         console.log(response.data)
         this.error = ''
         this.message = 'Successfully Login into your Account'

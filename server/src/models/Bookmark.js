@@ -6,4 +6,3 @@ module.exports = (sequelize, DataTypes) => {
     }
     return Bookmark
   }
-  

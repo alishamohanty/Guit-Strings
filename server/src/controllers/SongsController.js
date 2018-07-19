@@ -4,7 +4,6 @@ module.exports = {
     try {
       let songs = ''
       const search = req.query.search
-      console.log('search in index method',search)
         if (search) {
           songs = await Song.findAll({
             where: {
@@ -44,7 +43,6 @@ module.exports = {
   async show (req, res) {
     try {
       const song = await Song.findById(req.params.songId)
-      console.log('This is song', song)
       res.send(song)
     } catch (error) {
       console.log('This is an error')
@@ -58,7 +56,7 @@ module.exports = {
           id: req.params.songId
         }
       })
-      console.log('Song Updated', song)
+      console.log('Song Updated')
       res.send(song)
     } catch (error) {
       console.log('This is an error while updating the song')

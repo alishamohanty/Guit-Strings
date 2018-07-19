@@ -16,12 +16,41 @@
                         medium
                         right
                         absolute
+                        title="Edit"
                         middle
                         @click="navigateTo({ name:'song-edit', params: {
                   songId: songId
                  }})">
                     <v-icon>edit</v-icon>
                     </v-btn>
+                      <v-btn
+                        v-if="isUserLoggedIn && !isBookmarked"
+                        fab
+                        right
+                        dark
+                        color="cyan darken-3"
+                        medium
+                        absolute
+                        middle
+                        class="book"
+                        title="Bookmark"
+                        @click="bookmark()">
+                    <v-icon>bookmark</v-icon>
+                    </v-btn>
+                      <v-btn
+                        v-if="isUserLoggedIn && isBookmarked"
+                        fab
+                        right
+                        dark
+                        color="cyan darken-3"
+                        medium
+                        absolute
+                        middle
+                        class="unbook"
+                        title="Unbookmark"
+                        @click="unbookmark">
+                    <v-icon>bookmark_border</v-icon>
+                  </v-btn>
                 </v-toolbar>
         <v-layout>
             <v-flex xs8 class="pt-5 top-panel">
@@ -77,20 +106,34 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 import SongsService from '@/services/SongsService'
+import BookmarksService from '@/services/BookmarksService'
 import YouTube from 'vue-youtube-embed'
 export default {
   data () {
     return {
       song: '',
-      songId: this.$store.state.route.params.songId
+      songId: this.$store.state.route.params.songId,
+      isBookmarked: false
     }
+  },
+  computed: {
+    ...mapState([
+      'isUserLoggedIn'
+    ])
   },
   async mounted () {
     const songId = this.$store.state.route.params.songId
     console.log(songId)
     this.song = (await SongsService.show(songId)).data
     console.log(this.song)
+    const bookmark = (await BookmarksService.index({
+      songid: this.songId,
+      userid: this.$store.state.user.id
+    })).data
+    this.isBookmarked = !!bookmark
+    console.log('bookmarked?', this.isBookmarked)
   },
   components: {
     YouTube
@@ -98,6 +141,32 @@ export default {
   methods: {
     navigateTo (route) {
       this.$router.push(route)
+    },
+    async bookmark () {
+      if (!this.isUserLoggedIn) {
+        return
+      }
+      try {
+        await BookmarksService.post({
+          SongId: this.songId,
+          UserId: this.$store.state.user.id
+        })
+        console.log('Bookmarked')
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async unbookmark () {
+      try {
+        console.log('Inside Unbookmark method')
+        await BookmarksService.delete({
+          songId: this.songId,
+          userId: this.$store.state.user.id
+        })
+        console.log('Unbookmarked')
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }
@@ -114,13 +183,11 @@ export default {
   }
   .song-artist {
     font-size: 1.5rem;
-    padding-right:54px;
+    padding-right:126px;
   }
   .song-genre-album {
     font-size: 1.8rem;
     color:#00838F;
-  }
-  .top-panel {
   }
   .image-url {
   height: 300px;
@@ -128,5 +195,11 @@ export default {
 }
 .v-btn--floating .v-icon {
     height: 50%;
+}
+.book {
+  margin-right: 65px;
+}
+.unbook {
+  margin-right: 65px
 }
 </style>

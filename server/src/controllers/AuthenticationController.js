@@ -43,6 +43,7 @@ module.exports = {
       error: 'The Password entered is invalid'})
     }
     const userJson = user.toJSON()
+    console.log('userJson is', userJson)
     res.send({
       user: userJson,
       token: jwtSignUser(userJson)
