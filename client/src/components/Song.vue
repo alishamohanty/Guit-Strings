@@ -124,16 +124,16 @@ export default {
     ])
   },
   watch: {
-   async song () {
-     if (!this.isUserLoggedIn) {
-      return
+    async song () {
+      if (!this.isUserLoggedIn) {
+        return
+      }
+      this.bookmark = (await BookmarksService.index({
+        SongId: this.songId,
+        UserId: this.$store.state.user.id
+      })).data
+      console.log('bookmarked?', !!(this.bookmark), this.bookmark)
     }
-    this.bookmark = (await BookmarksService.index({
-      songid: this.songId,
-      userid: this.$store.state.user.id
-    })).data
-    console.log('bookmarked?', !!(this.bookmark))
-   }
   },
   async mounted () {
     const songId = this.$store.state.route.params.songId
@@ -154,7 +154,7 @@ export default {
           SongId: this.songId,
           UserId: this.$store.state.user.id
         })).data
-        console.log('Bookmarked', !!(this.bookmark))
+        console.log('Bookmarked', !!(this.bookmark), this.bookmark)
       } catch (error) {
         console.log(error)
       }
@@ -201,6 +201,6 @@ export default {
   margin-right: 65px;
 }
 .unbook {
-  margin-right: 105px
+  margin-right: 65px
 }
 </style>
