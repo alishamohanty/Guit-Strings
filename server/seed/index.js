@@ -9,7 +9,7 @@ const Promise = require('bluebird')
 const songs = require('./songs.json')
 const users = require('./users.json')
 const bookmarks = require('./bookmarks.json')
-const historys = require('./history.json')
+const histories = require('./histories.json')
 
 sequelize.sync({force: true})
   .then(async function () {
@@ -29,7 +29,7 @@ sequelize.sync({force: true})
         })
       )
     await Promise.all(
-      historys.map(history => {
+      histories.map(history => {
         History.create(history)
       })
     )
