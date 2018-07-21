@@ -1,10 +1,13 @@
 <template>
   <v-layout>
-    <v-flex xs5>
+    <v-flex xs5 v-if="isUserLoggedIn">
       <song-bookmark/>
       <recently-viewed-songs class="mt-3"/>
     </v-flex>
-    <v-flex xs10 class="ml-2">
+    <v-flex :class="{
+      xs12: !isUserLoggedIn,
+      xs10: isUserLoggedIn
+    }" class="ml-2">
       <div class="white elevation-2">
               <v-toolbar flat dense dark class="cyan lighten-1">
                 <v-text-field
@@ -65,6 +68,7 @@ import SongsService from '@/services/SongsService'
 import SongBookmark from '@/components/SongBookmark'
 import RecentlyViewedSongs from '@/components/RecentlyViewedSongs'
 import _ from 'lodash'
+import {mapState} from 'vuex'
 export default {
   name: 'Songs',
   data () {
@@ -77,6 +81,11 @@ export default {
     Panel,
     SongBookmark,
     RecentlyViewedSongs
+  },
+  computed: {
+    ...mapState([
+      'isUserLoggedIn',
+    ])
   },
   methods: {
     navigateTo (route) {
