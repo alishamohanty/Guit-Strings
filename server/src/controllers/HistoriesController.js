@@ -6,7 +6,7 @@ module.exports = {
   async index(req, res) {
     try {
       console.log('Inside the index method of History', req.query)
-      const UserId = req.query.UserId
+      const UserId = req.user.id
       const where = {
         UserId: UserId
       }
@@ -22,7 +22,7 @@ module.exports = {
         .map(history => _.extend({}, history.Song, history
         ))
       console.log('Histories found??', histories)
-      res.send(histories)
+      res.send(_.uniqBy(histories, history => history.SongId))
     } catch (error) {
       res.status(500).send({
         error: 'Some issue finding Songs and fetching it'
@@ -32,7 +32,8 @@ module.exports = {
   async post(req, res) {
     try {
       console.log('Inside post method')
-      const { SongId, UserId } = req.body
+      const { SongId } = req.body
+      const UserId = req.user.id
       console.log(req.body, UserId, SongId)
       const newHistory = await History.create({
         SongId: SongId,

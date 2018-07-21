@@ -7,7 +7,7 @@ module.exports = {
     try {
       console.log('Inside the index method', req.query)
       const SongId = req.query.SongId
-      const UserId = req.query.UserId
+      const UserId = req.user.id
       const where = {
         UserId: UserId
       }
@@ -36,7 +36,8 @@ module.exports = {
   async post (req, res) {
     try {      
       console.log('Inside post method')
-      const {SongId,UserId} = req.body
+      const UserId = req.user.id
+      const {SongId} = req.body
       console.log(req.body,UserId,SongId)
       const bookmark = await Bookmark.findOne({
         where: {
@@ -64,8 +65,19 @@ module.exports = {
   async delete (req, res) {
     try {
       const bookmarkId = req.params.bookmarkId
+      const UserId = req.user.id
       console.log('bookmarkId is', bookmarkId)
-      const bookmark = await Bookmark.findById(bookmarkId)
+      const bookmark = await Bookmark.findOne({
+        where: {
+          id: bookmarkId,
+          UserId: UserId 
+        }
+      })
+      if (!bookmark) {
+        return res.status(403).send({
+          error: 'You do not have access to this Bookmark'
+        })
+      }
       await bookmark.destroy()
       res.send(bookmark)
     } catch (error) {

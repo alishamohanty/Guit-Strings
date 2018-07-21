@@ -9,6 +9,7 @@ const app = express()
 app.use(morgan('combined'))
 app.use(bodyParser.json())
 app.use(cors())
+require('./passport')
 routes(app)
 sequelize.sync()
   .then(() => {
