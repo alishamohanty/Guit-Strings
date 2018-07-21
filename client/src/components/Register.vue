@@ -11,7 +11,7 @@
           <div class="error black--text " v-html="error"/>
           <div class="message black--text " v-html="message"/>
           <br>
-          <v-btn class="cyan darken-2" @click="register" dark> Register </v-btn>
+          <v-btn class="light-green lighten-1" @click="register" dark> Register </v-btn>
         </div>
       </panel>
     </v-flex>

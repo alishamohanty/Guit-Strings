@@ -15,7 +15,7 @@ Vue.config.productionTip = false
 Vue.use(VueYouTubeEmbed)
 Vue.use(Vuetify, {
   theme: {
-    primary: colors.cyan.darken1, secondary: colors.cyan.lighten3, accent: colors.cyan.darken3, error: colors.pink.accent3, warning: colors.yellow.base, info: colors.blue.base, success: colors.green.base
+    primary: colors.green.darken3, secondary: colors.green.lighten2, accent: colors.lightGreen.lighten1, error: colors.red.base, warning: colors.yellow.base, info: colors.blue.base, success: colors.green.base
   }
 })
 sync(store, router)

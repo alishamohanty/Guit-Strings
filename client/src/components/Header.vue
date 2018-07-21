@@ -1,7 +1,5 @@
 <template>
-  <v-toolbar dark class="cyan darken-3">
-    <v-toolbar-side-icon></v-toolbar-side-icon>
-
+  <v-toolbar dark class="light-green darken-4">
     <v-toolbar-title class="white--text">
         <span class ="logo" @click="navigateTo({ name: 'songs'})" flat>TabTrack</span>
     </v-toolbar-title>

@@ -3,7 +3,7 @@
       <v-layout row wrap>
           <v-flex xs12 class="pt-5">
               <div class="white elevation-2 ">
-                <v-toolbar flat dense dark class="cyan darken-1">
+                <v-toolbar flat dense dark class="light-green darken-3">
                   <v-toolbar-title class="song-title">
                     {{song.title}}
                   </v-toolbar-title>
@@ -12,7 +12,7 @@
                       <v-btn
                         fab
                         dark
-                        color="cyan darken-3"
+                        color="light-green lighten-1"
                         medium
                         right
                         absolute
@@ -28,7 +28,7 @@
                         fab
                         right
                         dark
-                        color="cyan darken-3"
+                        color="light-green lighten-1"
                         medium
                         absolute
                         middle
@@ -42,7 +42,7 @@
                         fab
                         right
                         dark
-                        color="cyan darken-3"
+                        color="light-green lighten-1"
                         medium
                         absolute
                         middle
@@ -72,7 +72,7 @@
         </v-flex>
             <v-flex xs6 class="pl-1">
                 <div class="white elevation-2" text-xs-center>
-                    <v-toolbar flat dense dark class="cyan darken-1">
+                    <v-toolbar flat dense dark class="light-green darken-3">
                     <v-toolbar-title>
                         Tabs
                     </v-toolbar-title>
@@ -87,7 +87,7 @@
             </v-flex>
             <v-flex xs16 class="ml-2">
                 <div class="white elevation-2">
-                    <v-toolbar flat dense dark class="cyan darken-1">
+                    <v-toolbar flat dense dark class="light-green darken-3">
                     <v-toolbar-title>
                         Lyrics
                     </v-toolbar-title>
@@ -122,7 +122,8 @@ export default {
   computed: {
     ...mapState([
       'isUserLoggedIn',
-      'user'
+      'user',
+      'route'
     ])
   },
   watch: {
@@ -131,8 +132,7 @@ export default {
         return
       }
       const bookmarks = (await BookmarksService.index({
-        SongId: this.songId,
-        UserId: this.user.id
+        SongId: this.songId
       })).data
       console.log('bookmarks is', bookmarks)
       if (bookmarks.length) {
@@ -148,8 +148,7 @@ export default {
     console.log(this.song)
     if (this.isUserLoggedIn) {
       SongHistoryService.post({
-        SongId: songId,
-        UserId: this.user.id
+        SongId: songId
       })
     }
   },
@@ -163,8 +162,7 @@ export default {
     async setAsBookmark () {
       try {
         this.bookmark = (await BookmarksService.post({
-          SongId: this.songId,
-          UserId: this.user.id
+          SongId: this.songId
         })).data
         console.log('Bookmarked', !!(this.bookmark), this.bookmark)
       } catch (error) {

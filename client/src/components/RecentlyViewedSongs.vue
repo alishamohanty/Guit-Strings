@@ -35,7 +35,7 @@ export default {
         sortBy: 'date',
         descending: true
       },
-      bookmarks: [
+      songs: [
       ]
     }
   },
@@ -50,11 +50,9 @@ export default {
   },
   async mounted () {
     if (this.isUserLoggedIn) {
-      this.songs = (await SongHistoryService.index({
-        UserId: this.user.id
-      })).data
+      this.songs = (await SongHistoryService.index()).data
     }
-    console.log(this.bookmarks)
+    console.log(this.songs)
   }
 }
 </script>

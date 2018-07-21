@@ -2,7 +2,7 @@
   <v-layout>
     <v-flex lg5>
       <div class="white elevation-2">
-        <v-toolbar flat dense dark class="cyan darken-1">
+        <v-toolbar flat dense dark class="light-green darken-2">
           <v-toolbar-title>
             Songs Meta Data
           </v-toolbar-title>
@@ -19,7 +19,7 @@
     </v-flex>
     <v-flex lg7 class="ml-1">
       <div class="white elevation-2">
-        <v-toolbar flat dense dark class="cyan darken-1">
+        <v-toolbar flat dense dark class="light-green darken-2">
           <v-toolbar-title>
             Song Structure
           </v-toolbar-title>
@@ -39,7 +39,7 @@
           v-model="song.lyrics"
         ></v-textarea>
           <div  class="danger-alert" v-if="error">{{error}} </div>
-        <v-btn class="cyan darken-2 mb-3" dark @click="create">
+        <v-btn class="light-green lighten-1 mb-3" dark @click="create">
           Create a Song
         </v-btn>
       </div>

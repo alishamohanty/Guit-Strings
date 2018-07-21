@@ -9,7 +9,7 @@
       xs10: isUserLoggedIn
     }" class="ml-2">
       <div class="white elevation-2">
-              <v-toolbar flat dense dark class="cyan lighten-1">
+              <v-toolbar flat dense dark class="light-green darken-3">
                 <v-text-field
                   right
                   prepend-icon="search"
@@ -20,7 +20,7 @@
                 <v-btn
                   fab
                   dark
-                  color="cyan darken-3"
+                  color="light-green lighten-1"
                   medium
                   right
                   absolute
@@ -44,7 +44,7 @@
                       <div class="song-genre">
                         Song Genre: {{song.genre}}
                       </div>
-                      <v-btn class="cyan darken-2" @click="navigateTo({name: 'song', params: {
+                      <v-btn class="light-green lighten-1" @click="navigateTo({name: 'song', params: {
                         songId: song.id
                       } })"
                       dark> View </v-btn>
@@ -84,7 +84,7 @@ export default {
   },
   computed: {
     ...mapState([
-      'isUserLoggedIn',
+      'isUserLoggedIn'
     ])
   },
   methods: {
