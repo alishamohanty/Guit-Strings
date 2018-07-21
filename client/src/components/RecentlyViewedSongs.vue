@@ -1,8 +1,8 @@
 <template>
-  <panel title="Bookmarks">
+  <panel title="Recently Viewed Songs">
     <v-data-table
     :headers="headers"
-    :items="bookmarks"
+    :items="songs"
     :pagination.sync="pagination"
     class="elevation-1"
     >
@@ -16,7 +16,7 @@
 
 <script>
 import Panel from '@/components/Panel'
-import BookmarksService from '@/services/BookmarksService'
+import SongHistoryService from '@/services/SongHistoryService'
 import {mapState} from 'vuex'
 export default {
   data () {
@@ -50,7 +50,7 @@ export default {
   },
   async mounted () {
     if (this.isUserLoggedIn) {
-      this.bookmarks = (await BookmarksService.index({
+      this.songs = (await SongHistoryService.index({
         UserId: this.user.id
       })).data
     }

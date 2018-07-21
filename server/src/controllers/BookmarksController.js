@@ -23,10 +23,7 @@ module.exports = {
           ]
       })
       .map( bookmark => bookmark.toJSON())
-      .map( bookmark => _.extend(
-        {},
-        bookmark.Song,
-        bookmark
+      .map( bookmark => _.extend({}, bookmark.Song, bookmark
        ))
       console.log('Bookmarks found??', bookmarks)
       res.send(bookmarks)

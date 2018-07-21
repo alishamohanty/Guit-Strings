@@ -109,6 +109,7 @@
 import {mapState} from 'vuex'
 import SongsService from '@/services/SongsService'
 import BookmarksService from '@/services/BookmarksService'
+import SongHistoryService from '@/services/SongHistoryService'
 import YouTube from 'vue-youtube-embed'
 export default {
   data () {
@@ -120,7 +121,8 @@ export default {
   },
   computed: {
     ...mapState([
-      'isUserLoggedIn'
+      'isUserLoggedIn',
+      'user'
     ])
   },
   watch: {
@@ -128,10 +130,14 @@ export default {
       if (!this.isUserLoggedIn) {
         return
       }
-      this.bookmark = (await BookmarksService.index({
+      const bookmarks = (await BookmarksService.index({
         SongId: this.songId,
-        UserId: this.$store.state.user.id
+        UserId: this.user.id
       })).data
+      console.log('bookmarks is', bookmarks)
+      if (bookmarks.length) {
+        this.bookmark = bookmarks[0]
+      }
       console.log('bookmarked?', !!(this.bookmark), this.bookmark)
     }
   },
@@ -140,6 +146,12 @@ export default {
     console.log(songId)
     this.song = (await SongsService.show(songId)).data
     console.log(this.song)
+    if (this.isUserLoggedIn) {
+      SongHistoryService.post({
+        SongId: songId,
+        UserId: this.user.id
+      })
+    }
   },
   components: {
     YouTube
@@ -152,7 +164,7 @@ export default {
       try {
         this.bookmark = (await BookmarksService.post({
           SongId: this.songId,
-          UserId: this.$store.state.user.id
+          UserId: this.user.id
         })).data
         console.log('Bookmarked', !!(this.bookmark), this.bookmark)
       } catch (error) {

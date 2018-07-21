@@ -2,6 +2,7 @@
   <v-layout>
     <v-flex xs5>
       <song-bookmark/>
+      <recently-viewed-songs class="mt-3"/>
     </v-flex>
     <v-flex xs10 class="ml-2">
       <div class="white elevation-2">
@@ -62,6 +63,7 @@
 import Panel from '@/components/Panel'
 import SongsService from '@/services/SongsService'
 import SongBookmark from '@/components/SongBookmark'
+import RecentlyViewedSongs from '@/components/RecentlyViewedSongs'
 import _ from 'lodash'
 export default {
   name: 'Songs',
@@ -73,7 +75,8 @@ export default {
   },
   components: {
     Panel,
-    SongBookmark
+    SongBookmark,
+    RecentlyViewedSongs
   },
   methods: {
     navigateTo (route) {
