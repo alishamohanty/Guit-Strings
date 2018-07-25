@@ -1,7 +1,7 @@
 <template>
   <v-toolbar dark class="light-green darken-4">
     <v-toolbar-title class="white--text">
-        <span class ="logo" @click="navigateTo({ name: 'songs'})" flat>TabTrack</span>
+        <span class ="logo" @click="navigateTo({ name: 'songs'})" flat>Guit Strings</span>
     </v-toolbar-title>
     <v-toolbar-items class="pl-3">
     </v-toolbar-items>

@@ -42,7 +42,7 @@ export default {
         })
         console.log(response.data)
         this.error = ''
-        this.message = 'Sucessfully Registered in TabTrack'
+        this.message = 'Sucessfully Registered in Guit Strings'
       } catch (error) {
         this.error = error.response.data.error
         console.log(this.error)
